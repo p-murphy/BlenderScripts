@@ -37,6 +37,27 @@ class addPipeOp(bpy.types.Operator):
 		
 		return{'FINISHED'}
 
+class addOctahedronOp(bpy.types.Operator):
+	bl_idname = "mesh.primitive_octahedron_add"
+	bl_label = "Octahedron"
+	bl_options = {'REGISTER', 'UNDO'}
+	
+	def execute(self, context):
+		verts = [(1.0, 1.0, -1.5099580252808664e-07), (-1.0, 1.0, -1.5099580252808664e-07), (0.0, -1.5099580252808664e-07, -1.0), (1.0, -1.0, 0.0), (-1.0, -1.0, 0.0), (0.0, 0.0, 1.0)] 
+
+		polygons = [(0, 1, 2), (3, 4, 5), (4, 3, 2), (3, 0, 2), (1, 4, 2), (1, 0, 5), (0, 3, 5), (4, 1, 5)] 
+
+		mesh = bpy.data.meshes.new("octahedron_mesh")
+		object = bpy.data.objects.new("octahedron", mesh)
+
+		object.location = bpy.context.scene.cursor_location
+		bpy.context.scene.objects.link(object)
+
+		mesh.from_pydata(verts, [], polygons)
+		mesh.update(calc_edges=True)
+		
+		return{'FINISHED'}
+
 #ENDOPERATORS
 		
 class INFO_MT_mesh_custom_menu_add(bpy.types.Menu):
@@ -46,8 +67,8 @@ class INFO_MT_mesh_custom_menu_add(bpy.types.Menu):
 	def draw(self, context):
 		layout = self.layout
 		layout.operator("mesh.primitive_pipe_add", text="Add Pipe")
-
-#ENDDRAW
+		layout.operator("mesh.primitive_octahedron_add", text = "Add Octahedron")
+		#ENDDRAW
 
 # Register all operators and panels
 
@@ -62,3 +83,4 @@ def register():
 def unregister():
 	bpy.utils.unregister_module(__name__)
 	bpy.types.INFO_MT_mesh_add.remove(menu_func)
+

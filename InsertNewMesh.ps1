@@ -1,4 +1,4 @@
-﻿Function CreateClass([string]$name)
+﻿Function InsertNewMesh([string]$name)
 {
     # Strip file extension. We only need the file name itself to insert into class boilerplate.
     $ClassName = $name -replace (".txt", "")
@@ -38,7 +38,7 @@
     $DrawString = 'layout.operator("mesh.primitive_' + $LowerCase + '_add", text = "Add ' + $TitleCase + '")'
 
     # Insert operator string in draw
-    $CustomMeshPy = $CustomMeshPy.Replace("#ENDDRAW", $DrawString + "`n`n#ENDDRAW")
+    $CustomMeshPy = $CustomMeshPy.Replace("#ENDDRAW", $DrawString + "`n`t`t#ENDDRAW")
 
     # Write final updates to Add On file
     $customMeshPy | Out-File ($PSScriptRoot + "\add_custom_mesh.py") -Encoding ascii
