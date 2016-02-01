@@ -13,9 +13,6 @@ bl_info = {
 		"category": "Add Mesh"
 }
 
-import bpy
-import mathutils
-
 class addPipeOp(bpy.types.Operator):
 	bl_idname = "mesh.primitive_pipe_add"
 	bl_label = "Pipe"
